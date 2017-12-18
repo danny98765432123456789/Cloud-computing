@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #map {
+      height: 800px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>My Google Maps Demo</h3>
+  <div id="map"></div>
+  <script>
+    $(document).ready(function() {
+
+
+      initMap(); //
+      // mark();
+      // codeAddress("多奇\r\n臺北市杭州南路一段116巷25號\r\n02-23222480", "臺北市杭州南路一段116巷25號 ");
+      // codeAddress("新興", "臺北市中山區中山北路二段13號");
+
+
+    });
+
+    function initMap() {
+      var uluru = {
+        lat: 25.019303,
+        lng: 121.542425
+      };
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: uluru
+      });
+}
+    function mark(){
+      $.ajax(
+            {
+                url: 'http://140.112.41.157:3001/googlemap/googlemap',
+                type: 'GET',
+                async: false,
+                data: {},
+                dataType: 'json',
+                success: function (data) {
+
+                  //alert(data);
+                    var first = true;
+                    // var map;
+                    for (var index in data) {
+
+                              //建立緯經度座標
+                        var myLatlng = new google.maps.LatLng(data[index].park_longitude, data[index].park_latitude);
+                        //加一個Marker到map中
+                        var marker = new google.maps.Marker({
+                            position: myLatlng,
+                            map: map,
+                            title: data[index].park_name
+                        });
+                    } //End for (var index in data)
+                }     //End success: function (data)
+            });       //End jQuery Ajax
+}
+      //    var contentString = '<div id="content">' +
+      //        '<div id="siteNotice">' +
+      //        '</div>' +
+      //       '<h1 id="firstHeading" class="firstHeading"思賢停車場</h1>' +
+      /*      '<div id="bodyContent">' +
+            '<p><b>思賢停車場</b>, 123 </p> ' +
+            '</div>' +
+            '</div>';
+        var marker = new google.maps.Marker({
+            position: {
+                lat: 25.047666785067,
+                lng: 121.456711795257
+            },
+            map: map
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        var contentString = '<div id="content">' +
+            '<p>123' + '</p>' + '</div>';
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+
+*/
+      // window.onload = function() {
+        // $.ajax(
+        //   'http://140.112.41.157:3001/googlemap/googlemap', {
+        //     async: false,
+        //     cache: false,
+        //     contentType: 'application/json',
+        //     success: function(data) {
+        //       LoadMap(data);
+        //       alert(data);
+        //     }
+        //   }
+        // );
+      // }
+
+
+      function LoadMap(markers) {
+        var mapOptions = {
+          center: new google.maps.LatLng(markers[0].Latitude, markers[0].Longitude),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var infoWindow = new google.maps.InfoWindow();
+        var latlngbounds = new google.maps.LatLngBounds();
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+
+        for (var i = 0; i < markers.length; i++) {
+          var data = markers[i]
+          var myLatlng = new google.maps.LatLng(data.park_latitude, data.park_longitude);
+          var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: data.title
+          });
+          (function(marker, data) {
+            google.maps.event.addListener(marker, "click", function(e) {
+              infoWindow.setContent("<div style = 'width:200px;min-height:40px'>" + data.park_name + data.park_area + "</div>");
+              infoWindow.open(map, marker);
+            });
+          })(marker, data);
+          latlngbounds.extend(marker.position);
+        }
+        var bounds = new google.maps.LatLngBounds();
+        map.setCenter(latlngbounds.getCenter());
+        map.fitBounds(latlngbounds);
+      }
+
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO4ZYLVfg2r34jXwNR-u5ce7eO2P3Gjmg&callback=initMap">
+  </script>
+  <script type="text/javascript" src="HTTP://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href='css/main.css' rel='stylesheet'>
+
+  <script type="text/javascript" src="jquery.js"></script>
+  <script>
+    $(document).ready(function() {
+      setInterval(function() {
+        getByID("樂遊天地停車場");
+        getByID("三民地下停車場");
+        getByID("台灣聯通介壽場停車場");
+        getByID("傳峰停車場");
+      }, 1000);
+    })
+
+    function getByID(device_id) {
+      // alert(device_id);
+      $.ajax("http://140.112.41.157:3001/googlemap/googlemap/" + device_id, {
+        type: 'GET',
+        success: function(result) {
+          // alert(result.park_servicetime);
+          $("#" + device_id + " > p").text("ID : " + result.park_name);
+          $("#" + device_id + " > p").next().text("longitude : " + result.park_longitude);
+          $("#" + device_id + " > p").next().next().text("latitude : " + result.park_latitude);
+        }
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <a class="navbar-brand" href="/file/INTRO.html"><span>GoogleMap Test</span></a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active">
+            <a href="/googlemap.html">Map</a>
+          </li>
+          <li>
+            <a href="#">Contacts</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Parkinglots</h1>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <blockquote id="樂遊天地停車場">
+            <p>ID：</p>
+            <footer>Location：
+              <br>
+            </footer>
+            <footer>Usage amount1：
+              <br>
+            </footer>
+          </blockquote>
+
+          <blockquote id="三民地下停車場">
+            <p>ID：</p>
+            <footer>Location：
+              <br>
+            </footer>
+            <footer>Usage amount：
+              <br>
+            </footer>
+          </blockquote>
+        </div>
+        <div class="col-md-6">
+          <blockquote id="台灣聯通介壽場停車場">
+            <p>ID：</p>
+            <footer>Location：
+              <br>
+            </footer>
+            <footer>Usage amount：
+              <br>
+            </footer>
+          </blockquote>
+          <blockquote id="傳峰停車場">
+            <p>ID：</p>
+            <footer>Location：
+              <br>
+            </footer>
+            <footer>Usage amount：
+              <br>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
